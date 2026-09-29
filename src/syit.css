@@ -3020,8 +3020,20 @@ textarea:focus-visible {
   padding-block: 5px;
 }
 
+/* Same problem for inline links inside legal prose (privacy/terms),
+   which render at ~21px line-box height. Inline-block + a small
+   vertical pad lifts them over the 24x24 minimum. */
+.prose a {
+  display: inline-block;
+  padding-block: 3px;
+}
+
 @media (max-width: 800px) {
   .footer__links a {
     padding-block: 9px;
+  }
+
+  .prose a {
+    padding-block: 6px;
   }
 }
