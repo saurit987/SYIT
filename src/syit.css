@@ -3238,3 +3238,32 @@ textarea:focus-visible {
 .terminal__footer {
   border-top-color: var(--border);
 }
+
+/* =========================================================
+   NO-JS BASELINE
+   `.reveal` defaults to opacity 0, which meant that if hydration
+   never ran (JS error, blocked script, crawler without JS) every
+   section below the hero stayed invisible — the site rendered as
+   a blank charcoal page. Default to visible, and only hide when
+   JS has confirmed it can reveal the element again.
+
+   useReveal() adds `js-reveal` to <html> on mount, so the hidden
+   state is opt-in and always recoverable.
+   ========================================================= */
+
+html:not(.js-reveal) .reveal,
+html:not(.js-reveal) .reveal-scale {
+  opacity: 1;
+
+  transform: none;
+}
+
+/* Belt and braces: if the observer somehow never fires, a
+   `no-motion` class (set by a timeout in useReveal) forces
+   everything visible rather than leaving gaps. */
+html.no-motion .reveal,
+html.no-motion .reveal-scale {
+  opacity: 1 !important;
+
+  transform: none !important;
+}
