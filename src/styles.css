@@ -62,6 +62,14 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* Tailwind/shadcn primitives. These are a SEPARATE token namespace
+   from the SYIT design system in syit.css and are consumed by the
+   shadcn/ui components only.
+
+   Note: this :root block is emitted after `@import "./syit.css"`, so
+   any token name shared with the SYIT system (--border, --radius)
+   would silently win over the design system here. Keep the two
+   namespaces disjoint — the SYIT palette lives in syit.css only. */
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -142,4 +150,14 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+}
+
+/* Re-assert the SYIT design-system tokens that this file also
+   defines. Because this :root block is emitted after the
+   `@import "./syit.css"`, the shadcn values above would otherwise
+   win for any shared token name. The site markup uses the SYIT
+   names directly, so they must resolve to the SYIT palette. */
+:root {
+  --border: #353c48;
+  --input: #353c48;
 }

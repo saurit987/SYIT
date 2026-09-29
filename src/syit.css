@@ -3184,3 +3184,57 @@ textarea:focus-visible {
     transform: none;
   }
 }
+
+/* =========================================================
+   GEOMETRY + SURFACE PASS
+   Larger radii and white-gradient fills read as consumer-app
+   rather than security consultancy. Sharpening the corners and
+   replacing the white wash with flat surface tone + a hairline
+   puts the emphasis on the content, per the reference sites.
+   Pills (999px) are left alone — they are deliberately pill-shaped.
+   ========================================================= */
+
+:root {
+  --radius-sm: 2px;
+  --radius-md: 4px;
+}
+
+.service-card,
+.hero-visual,
+.terminal,
+.feature-card,
+.terminal-card,
+.contact-form,
+.input,
+.textarea {
+  border-radius: var(--radius-md);
+}
+
+.button,
+.nav__button,
+.field input,
+.field textarea {
+  border-radius: var(--radius-sm);
+}
+
+/* Flat surface + hairline instead of a white gradient wash. */
+.service-card {
+  background: var(--surface);
+
+  transition:
+    transform var(--motion-slow) var(--ease),
+    border-color var(--motion-base) var(--ease),
+    background var(--motion-base) var(--ease);
+}
+
+.service-card:hover {
+  background: var(--surface-2);
+
+  border-color: var(--border-hover);
+}
+
+/* Hairline rules as the section separator. */
+.footer__bottom,
+.terminal__footer {
+  border-top-color: var(--border);
+}
