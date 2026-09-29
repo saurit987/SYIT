@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { useReveal } from "@/components/site/useReveal";
-import { useScrollStory } from "@/lib/useScrollStory";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -26,7 +25,6 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   useReveal();
-  useScrollStory();
   const [status, setStatus] = useState<string | null>(null);
 
   return (

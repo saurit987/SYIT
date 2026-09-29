@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { useReveal } from "@/components/site/useReveal";
-import { useScrollStory } from "@/lib/useScrollStory";
 
 export const Route = createFileRoute("/privacy")({
   head: () => ({
@@ -25,7 +24,6 @@ export const Route = createFileRoute("/privacy")({
 
 function PrivacyPage() {
   useReveal();
-  useScrollStory();
 
   return (
     <>

@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { useReveal } from "@/components/site/useReveal";
-import { useScrollStory } from "@/lib/useScrollStory";
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
@@ -24,7 +23,6 @@ export const Route = createFileRoute("/terms")({
 
 function TermsPage() {
   useReveal();
-  useScrollStory();
 
   return (
     <>
