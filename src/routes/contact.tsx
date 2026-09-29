@@ -57,7 +57,7 @@ function ContactPage() {
               </div>
               <div className="contact-detail">
                 <span>PHONE</span>
-                <a href="tel:+910000000000">+91 XXXXX XXXXX</a>
+                <span>+91 XXXXX XXXXX</span>
               </div>
               <div className="contact-detail">
                 <span>LOCATION</span>
