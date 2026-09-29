@@ -1,6 +1,11 @@
-# Secure Haven Online
+# SYIT
 
-I am trying to build an web app for my cybersecurity consultancy. this consultancy will support startups as well as individuals who wants consultancy on data privacy, identity protection etc. I have a template website attached. Make sure you keep theme & UI similar. But include all necessary things. not just a single page website, but miltipage with privacy policy notice, terms & conditions, what are we, why we are useful and all necessary things.
+**SYIT** — "Secure Your Infrastructure". A cybersecurity and data privacy consultancy
+serving startups and individuals: security audits, data privacy, identity protection
+and compliance readiness. Multi-page site (home, what we are, why us, services,
+for individuals, contact, privacy policy, terms & conditions).
+
+Stack: TanStack Start (SSR) + Vite + Tailwind v4 + Nitro, deployed to Vercel.
 
 This project was built with [Lovable](https://lovable.dev).
 

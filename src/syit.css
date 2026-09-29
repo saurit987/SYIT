@@ -2985,3 +2985,43 @@ textarea:focus-visible {
     transform: none;
   }
 }
+
+/* =========================================================
+   ACCESSIBILITY PASS
+   Smallest mono micro-labels rendered at 7–10px, which is
+   below the legible floor. Raised to 11px (0.6875rem) without
+   changing the type scale, weights or letter-spacing.
+   ========================================================= */
+
+.brand__label,
+.eyebrow,
+.hero__meta-label,
+.hero-visual__top,
+.hero-visual__data span,
+.hero-visual__data strong,
+.hero-visual__footer,
+.section-number,
+.trust__item span,
+.service-card__number,
+.live-indicator,
+.terminal__title,
+.terminal__status,
+.systems__note span,
+.field label,
+.footer__links div > span {
+  font-size: 0.6875rem;
+}
+
+/* Footer / nav links sit at 21px tall on mobile, under the
+   24x24 CSS-px WCAG 2.5.8 minimum. Padding lifts the hit
+   area without changing the visual size of the text. */
+.footer__links a {
+  display: inline-block;
+  padding-block: 5px;
+}
+
+@media (max-width: 800px) {
+  .footer__links a {
+    padding-block: 9px;
+  }
+}

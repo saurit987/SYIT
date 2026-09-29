@@ -12,4 +12,7 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Pin Nitro to the Vercel preset. Without this the Lovable config defaults to
+  // `cloudflare-module` (emitting wrangler.json), which Vercel cannot run.
+  nitro: { preset: "vercel" },
 });
