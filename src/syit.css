@@ -3343,7 +3343,10 @@ html.no-motion .reveal-scale {
   white-space: nowrap;
 }
 
-.contact-form__submit:disabled {
+/* aria-disabled rather than [disabled]: the attribute would drop focus to
+   <body> mid-submit. See the guard in routes/contact.tsx. */
+.contact-form__submit:disabled,
+.contact-form__submit[aria-disabled="true"] {
   cursor: progress;
   opacity: 0.6;
 }

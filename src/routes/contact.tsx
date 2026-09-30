@@ -34,6 +34,16 @@ function ContactPage() {
   const [state, setState] = useState<SubmitState>({ kind: "idle" });
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    // Guard rather than rely on the disabled attribute: `disabled` on a
+    // focused button makes Chromium drop focus to <body>, so a keyboard user
+    // who submits gets thrown back to the top of the document with the
+    // outcome only visible in a live region. aria-disabled keeps the button
+    // focusable and announced, and this guard stops a double submit.
+    if (state.kind === "sending") {
+      event.preventDefault();
+      return;
+    }
+
     event.preventDefault();
     const form = event.currentTarget;
     const data = Object.fromEntries(new FormData(form).entries());
@@ -166,7 +176,7 @@ function ContactPage() {
               <button
                 type="submit"
                 className="contact-form__submit"
-                disabled={state.kind === "sending"}
+                aria-disabled={state.kind === "sending"}
               >
                 {state.kind === "sending" ? "Sending…" : "Send message"}
                 <span>↗</span>
