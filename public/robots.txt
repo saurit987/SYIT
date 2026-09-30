@@ -12,3 +12,7 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# Declared explicitly so crawlers can find the sitemap without guessing
+# /sitemap.xml. Without this, discovery depends on the default convention.
+Sitemap: https://syit.sauritlab.xyz/sitemap.xml
