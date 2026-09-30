@@ -1,0 +1,13 @@
+{
+  "name": "SYIT — Secure Your Infrastructure",
+  "short_name": "SYIT",
+  "description": "Security, data privacy and identity consultancy for startups and individuals.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1c1f26",
+  "theme_color": "#1c1f26",
+  "icons": [
+    { "src": "/favicon-128.png", "sizes": "128x128", "type": "image/png" },
+    { "src": "/favicon-256.png", "sizes": "256x256", "type": "image/png", "purpose": "any" }
+  ]
+}

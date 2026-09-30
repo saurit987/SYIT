@@ -3,6 +3,12 @@ import { useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { useReveal } from "@/components/site/useReveal";
 
+type SubmitState =
+  | { kind: "idle" }
+  | { kind: "sending" }
+  | { kind: "sent" }
+  | { kind: "error"; message: string };
+
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
@@ -25,7 +31,42 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   useReveal();
-  const [status, setStatus] = useState<string | null>(null);
+  const [state, setState] = useState<SubmitState>({ kind: "idle" });
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    setState({ kind: "sending" });
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        const body = (await res.json().catch(() => ({}))) as { error?: string };
+        setState({
+          kind: "error",
+          message:
+            body.error ??
+            "We couldn't send that just now. Please email admin@sauritlab.xyz directly.",
+        });
+        return;
+      }
+
+      form.reset();
+      setState({ kind: "sent" });
+    } catch {
+      setState({
+        kind: "error",
+        message:
+          "We couldn't reach the server. Check your connection, or email admin@sauritlab.xyz directly.",
+      });
+    }
+  }
 
   return (
     <>
@@ -53,7 +94,7 @@ function ContactPage() {
             <div className="contact__details">
               <div className="contact-detail">
                 <span>EMAIL</span>
-                <a href="mailto:hello@syit.io">hello@syit.io</a>
+                <a href="mailto:admin@sauritlab.xyz">admin@sauritlab.xyz</a>
               </div>
               <div className="contact-detail">
                 <span>PHONE</span>
@@ -67,14 +108,7 @@ function ContactPage() {
           </div>
 
           <div className="contact__form-wrapper reveal">
-            <form
-              className="contact-form"
-              onSubmit={(event) => {
-                event.preventDefault();
-                setStatus("Thanks — your message is noted. We'll reply within one business day.");
-                (event.target as HTMLFormElement).reset();
-              }}
-            >
+            <form className="contact-form" onSubmit={handleSubmit} noValidate={false}>
               <div className="contact-form__row">
                 <div className="field">
                   <label htmlFor="name">Name</label>
@@ -123,8 +157,18 @@ function ContactPage() {
                 />
               </div>
 
-              <button type="submit" className="contact-form__submit">
-                Send message
+              {/* Honeypot — hidden from people, tempting to bots. */}
+              <div aria-hidden="true" className="form-trap">
+                <label htmlFor="website">Website</label>
+                <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+              </div>
+
+              <button
+                type="submit"
+                className="contact-form__submit"
+                disabled={state.kind === "sending"}
+              >
+                {state.kind === "sending" ? "Sending…" : "Send message"}
                 <span>↗</span>
               </button>
 
@@ -133,8 +177,18 @@ function ContactPage() {
               </p>
             </form>
 
-            <div aria-live="polite" style={{ marginTop: 16, fontSize: ".9rem", opacity: 0.8 }}>
-              {status}
+            <div aria-live="polite" className="contact-form__status">
+              {state.kind === "sent" && (
+                <p className="is-success">
+                  Thanks — your message reached us. We&apos;ll reply within one business day.
+                </p>
+              )}
+              {state.kind === "error" && (
+                <p className="is-error">
+                  {state.message}{" "}
+                  <a href="mailto:admin@sauritlab.xyz">admin@sauritlab.xyz</a>
+                </p>
+              )}
             </div>
           </div>
         </div>

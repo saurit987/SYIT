@@ -3320,3 +3320,47 @@ html.no-motion .reveal-scale {
 
   transform: none !important;
 }
+
+/* =========================================================
+   CONTACT FORM
+   ========================================================= */
+
+/* Honeypot: must be hidden from people but still submitted by bots, so it
+   is clipped to 1px rather than display:none / visibility:hidden (which
+   some bots skip). tabIndex -1 keeps it out of the tab order. */
+.form-trap {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.contact-form__submit:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+.contact-form__status {
+  margin-top: 16px;
+  font-size: 0.9rem;
+
+  p {
+    margin: 0;
+  }
+}
+
+.contact-form__status .is-success {
+  color: var(--text);
+}
+
+.contact-form__status .is-error {
+  color: #f0a89c;
+}
+
+.contact-form__status a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
