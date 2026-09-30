@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { useReveal } from "@/components/site/useReveal";
 
@@ -33,16 +33,23 @@ function ContactPage() {
   useReveal();
   const [state, setState] = useState<SubmitState>({ kind: "idle" });
 
+  // The in-flight flag has to be a ref, not `state`: five clicks dispatched in
+  // one tick all close over the same `idle` state, because React has not
+  // re-rendered between them. A state guard let all five through (measured:
+  // 5 POSTs to /api/contact). The ref flips synchronously on first submit.
+  const inFlight = useRef(false);
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     // Guard rather than rely on the disabled attribute: `disabled` on a
     // focused button makes Chromium drop focus to <body>, so a keyboard user
     // who submits gets thrown back to the top of the document with the
     // outcome only visible in a live region. aria-disabled keeps the button
     // focusable and announced, and this guard stops a double submit.
-    if (state.kind === "sending") {
+    if (inFlight.current) {
       event.preventDefault();
       return;
     }
+    inFlight.current = true;
 
     event.preventDefault();
     const form = event.currentTarget;
@@ -75,6 +82,9 @@ function ContactPage() {
         message:
           "We couldn't reach the server. Check your connection, or email admin@sauritlab.xyz directly.",
       });
+    } finally {
+      // Release on every path, including the early `return` on !res.ok.
+      inFlight.current = false;
     }
   }
 
