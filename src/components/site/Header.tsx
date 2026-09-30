@@ -43,10 +43,16 @@ export function Header() {
   }, [open]);
 
   // Close on Escape — a drawer the keyboard cannot dismiss is a trap.
+  // Focus returns to the toggle, or the next Tab lands mid-page with
+  // no indication of where the user went.
+  const menuBtn = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        menuBtn.current?.focus();
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -79,6 +85,7 @@ export function Header() {
         <button
           className={`nav__menu${open ? " is-open" : ""}`}
           type="button"
+          ref={menuBtn}
           aria-label={open ? "Close navigation" : "Open navigation"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}

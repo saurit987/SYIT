@@ -124,6 +124,9 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <a className="skip-link" href="#main">
+          Skip to content
+        </a>
         {children}
         <Scripts />
       </body>
@@ -139,7 +142,7 @@ function RootComponent() {
       <Background />
       <ScrollProgress />
       <Header />
-      <main>
+      <main id="main" tabIndex={-1}>
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
       </main>
