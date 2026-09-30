@@ -41,8 +41,8 @@ function PrivacyPage() {
             <p>
               SYIT ("we", "us") is a cybersecurity and data privacy consultancy serving startups and
               individuals. For any privacy question, write to{" "}
-              <a href="mailto:privacy@syit.io" style={{ color: "var(--blue)" }}>
-                privacy@syit.io
+              <a href="mailto:privacy@sauritlab.xyz" style={{ color: "var(--blue)" }}>
+                privacy@sauritlab.xyz
               </a>
               .
             </p>
@@ -74,9 +74,19 @@ function PrivacyPage() {
 
             <h2>4. Cookies and analytics</h2>
             <p>
-              This website uses only the cookies strictly necessary to serve pages. If we add
-              analytics or any non-essential cookie in future, we will ask for consent first and
-              update this notice.
+              This website sets no cookies. We run a minimal, first-party page-view counter so we
+              know the site is being visited and which pages work.
+            </p>
+            <p>
+              It records only the page you opened, a coarse screen-size category, and the
+              referring site if you arrived from a link. It stores nothing in your browser, sets no
+              cookie, builds no profile, and does not retain your IP address, so a visit cannot be
+              linked back to you. The data is used in aggregate to keep the site online and to find
+              pages that are broken.
+            </p>
+            <p>
+              If we ever introduce anything that requires consent — advertising, cross-site
+              tracking, or any non-essential cookie — we will ask you first and update this notice.
             </p>
 
             <h2>5. How long we keep data</h2>
@@ -116,8 +126,8 @@ function PrivacyPage() {
             </p>
             <p>
               To exercise any right, email{" "}
-              <a href="mailto:privacy@syit.io" style={{ color: "var(--blue)" }}>
-                privacy@syit.io
+              <a href="mailto:privacy@sauritlab.xyz" style={{ color: "var(--blue)" }}>
+                privacy@sauritlab.xyz
               </a>
               . We respond within 30 days.
             </p>

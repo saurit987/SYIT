@@ -124,6 +124,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "manifest", href: "/site.webmanifest" },
       { rel: "sitemap", type: "application/xml", href: "/sitemap.xml" },
     ],
+    scripts: [{ src: "/track.js", defer: true }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
