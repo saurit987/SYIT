@@ -3046,9 +3046,14 @@ textarea:focus-visible {
 
 /* Skip link (WCAG 2.4.1). Off-screen until focused, then pinned
    top-left in the existing palette. main is focusable via
-   tabindex="-1" so the jump actually moves the focus ring. */
+   tabindex="-1" so the jump actually moves the focus ring.
+
+   `fixed`, not `absolute`: this element is the FIRST tab stop, so a
+   keyboard user who has already scrolled reaches it with top at
+   -scrollY — focusing it revealed nothing on screen and the bypass
+   silently failed. Fixed pins it to the viewport at any scroll depth. */
 .skip-link {
-  position: absolute;
+  position: fixed;
 
   top: 0;
 
