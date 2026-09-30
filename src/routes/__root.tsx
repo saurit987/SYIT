@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { canonicalUrl } from "../lib/seo";
 import { Header } from "../components/site/Header";
 import { Footer } from "../components/site/Footer";
 import { Background } from "../components/site/Background";
@@ -77,55 +78,62 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { name: "theme-color", content: "#1c1f26" },
-      { title: "SYIT — Secure Your Infrastructure" },
-      {
-        name: "description",
-        content: "SYIT — security and data privacy consultancy for startups and individuals.",
-      },
-      { name: "author", content: "SYIT" },
-      { property: "og:title", content: "SYIT — Secure Your Infrastructure" },
-      {
-        property: "og:description",
-        content: "Security and data privacy consultancy for startups and individuals.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://syit.sauritlab.xyz" },
-      { property: "og:image", content: "https://syit.sauritlab.xyz/og-default.png" },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: "SYIT — Secure Your Infrastructure" },
-      { property: "og:site_name", content: "SYIT" },
-      { name: "twitter:card", content: "summary_large_image" },
-      {
-        name: "twitter:image",
-        content: "https://syit.sauritlab.xyz/og-default.png",
-      },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap",
-      },
-      { rel: "icon", href: "/favicon.ico", sizes: "any" },
-      { rel: "icon", href: "/favicon-32.png", type: "image/png", sizes: "32x32" },
-      { rel: "icon", href: "/favicon-128.png", type: "image/png", sizes: "128x128" },
-      { rel: "apple-touch-icon", href: "/favicon-128.png" },
-      { rel: "manifest", href: "/site.webmanifest" },
-      { rel: "sitemap", type: "application/xml", href: "/sitemap.xml" },
-    ],
-    scripts: [{ src: "/track.js", defer: true }],
-  }),
+  head: ({ matches }) => {
+    // Deepest match wins: the leaf route knows its own path, and the root's
+    // fullPath is always "/". Falls back to "/" when there is nothing better,
+    // so a 404 never advertises a canonical URL.
+    const path = matches[matches.length - 1]?.fullPath ?? "/";
+    return {
+      meta: [
+        { charSet: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { name: "theme-color", content: "#1c1f26" },
+        { title: "SYIT — Secure Your Infrastructure" },
+        {
+          name: "description",
+          content: "SYIT — security and data privacy consultancy for startups and individuals.",
+        },
+        { name: "author", content: "SYIT" },
+        { property: "og:title", content: "SYIT — Secure Your Infrastructure" },
+        {
+          property: "og:description",
+          content: "Security and data privacy consultancy for startups and individuals.",
+        },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: canonicalUrl(path) },
+        { property: "og:image", content: "https://syit.sauritlab.xyz/og-default.png" },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+        { property: "og:image:alt", content: "SYIT — Secure Your Infrastructure" },
+        { property: "og:site_name", content: "SYIT" },
+        { name: "twitter:card", content: "summary_large_image" },
+        {
+          name: "twitter:image",
+          content: "https://syit.sauritlab.xyz/og-default.png",
+        },
+      ],
+      links: [
+        {
+          rel: "stylesheet",
+          href: appCss,
+        },
+        { rel: "preconnect", href: "https://fonts.googleapis.com" },
+        { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap",
+        },
+        { rel: "icon", href: "/favicon.ico", sizes: "any" },
+        { rel: "icon", href: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+        { rel: "icon", href: "/favicon-128.png", type: "image/png", sizes: "128x128" },
+        { rel: "apple-touch-icon", href: "/favicon-128.png" },
+        { rel: "manifest", href: "/site.webmanifest" },
+        { rel: "sitemap", type: "application/xml", href: "/sitemap.xml" },
+        { rel: "canonical", href: canonicalUrl(path) },
+      ],
+      scripts: [{ src: "/track.js", defer: true }],
+    };
+  },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
