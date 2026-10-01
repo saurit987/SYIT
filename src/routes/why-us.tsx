@@ -98,7 +98,7 @@ function WhyUsPage() {
             {reasons.map((r) => (
               <div className="feature-card reveal" key={r.tag}>
                 <span className="feature-card__tag">{r.tag}</span>
-                <h3>{r.title}</h3>
+                <h2>{r.title}</h2>
                 <p>{r.body}</p>
               </div>
             ))}

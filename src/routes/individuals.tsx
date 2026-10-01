@@ -78,7 +78,7 @@ function IndividualsPage() {
             {helps.map((h) => (
               <div className="feature-card reveal" key={h.tag}>
                 <span className="feature-card__tag">{h.tag}</span>
-                <h3>{h.title}</h3>
+                <h2>{h.title}</h2>
                 <p>{h.body}</p>
               </div>
             ))}

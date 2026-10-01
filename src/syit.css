@@ -1121,7 +1121,10 @@ button {
   margin-top: auto;
 }
 
-.service-card h3 {
+/* h2 where the card grid is the page's top-level section, h3 where it nests
+   under a section heading (homepage). Match both so the level can be corrected
+   per route without restyling. */
+.service-card :is(h2, h3) {
   max-width: 280px;
 
   margin-bottom: 11px;
@@ -2383,7 +2386,7 @@ button {
   color: var(--green);
 }
 
-.feature-card h3 {
+.feature-card :is(h2, h3) {
   font-family: var(--display);
   font-size: 1.12rem;
   margin: 14px 0 10px;
@@ -2521,8 +2524,8 @@ summary {
 .prose h3,
 .step h3,
 .faq summary,
-.service-card h3,
-.feature-card h3 {
+.service-card :is(h2, h3),
+.feature-card :is(h2, h3) {
   font-weight: 600;
 }
 
@@ -2817,7 +2820,7 @@ body.menu-open .site-header.is-hidden {
   box-shadow: 0 0 10px rgba(116, 165, 224, 0.6);
 }
 
-.feature-card h3 {
+.feature-card :is(h2, h3) {
   margin: 18px 0 10px;
   font-size: 1.18rem;
   letter-spacing: -0.02em;
@@ -2834,7 +2837,7 @@ body.menu-open .site-header.is-hidden {
   padding: 26px;
 }
 
-.service-card h3 {
+.service-card :is(h2, h3) {
   font-size: 1.18rem;
   letter-spacing: -0.02em;
 }

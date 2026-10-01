@@ -119,7 +119,7 @@ function ServicesPage() {
                   </div>
                 </div>
                 <div className="service-card__content">
-                  <h3>{s.title}</h3>
+                  <h2>{s.title}</h2>
                   <p>{s.body}</p>
                   <ul style={{ marginTop: 16, paddingLeft: 18 }}>
                     {s.includes.map((i) => (
