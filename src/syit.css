@@ -1491,6 +1491,14 @@ button {
   font-weight: 500;
 }
 
+/* The mailto link is a grid child, so it blockifies and its hit area is just
+   the line-height: 23.55px, a 0.45px shortfall against the WCAG 2.5.8 AA 24px
+   floor. padding-block grows the target without changing the rendered text
+   size or the colour. */
+.contact-detail a {
+  padding-block: 3px;
+}
+
 .contact-detail a:hover {
   color: var(--blue);
 }
