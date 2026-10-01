@@ -1331,7 +1331,10 @@ button {
 }
 
 .terminal__muted {
-  color: #566171;
+  /* Was #566171 — 3.12:1 on the #080c11 terminal, a WCAG 1.4.3 failure at
+   * 10.24px. Same hue (215.6deg) and saturation, lightness raised to clear
+   * 4.5:1 (now 5.00:1) without changing the muted-vs-accent hierarchy. */
+  color: #6b82a4;
 }
 
 .terminal__success {
