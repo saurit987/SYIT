@@ -7,6 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import type { AnyRouteMatch } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
@@ -80,11 +81,18 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: ({ matches }) => {
     // Deepest match wins: the leaf route knows its own path, and the root's
-    // fullPath is always "/". Falls back to "/" when there is nothing better,
-    // so a 404 never advertises a canonical URL.
-    const path = matches[matches.length - 1]?.fullPath ?? "/";
-    return {
-      meta: [
+    // fullPath is always "/". Falls back to "/" when there is nothing better.
+    const leaf = matches[matches.length - 1];
+    // A not-found render still resolves a match list (the leaf is the global
+    // not-found route, whose fullPath is "/"), so the fallback above would
+    // otherwise point every 404's canonical at the homepage — telling search
+    // engines an unknown URL is a duplicate of "/". Detect it and emit noindex
+    // with no canonical at all.
+    const isNotFound = matches.some(
+      (m) => m.status === "notFound" || m.globalNotFound,
+    );
+    const path = leaf?.fullPath ?? "/";
+    const meta = [
         { charSet: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         { name: "theme-color", content: "#1c1f26" },
@@ -111,8 +119,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           name: "twitter:image",
           content: "https://syit.sauritlab.xyz/og-default.png",
         },
-      ],
-      links: [
+        // Keep 404s out of the index instead of letting them be crawled and
+        // indexed as duplicates of the homepage.
+        ...(isNotFound
+          ? [{ name: "robots", content: "noindex, nofollow" } as const]
+          : []),
+    ];
+
+    const links: AnyRouteMatch["links"] = [
         {
           rel: "stylesheet",
           href: appCss,
@@ -129,8 +143,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { rel: "apple-touch-icon", href: "/favicon-128.png" },
         { rel: "manifest", href: "/site.webmanifest" },
         { rel: "sitemap", type: "application/xml", href: "/sitemap.xml" },
-        { rel: "canonical", href: canonicalUrl(path) },
-      ],
+    ];
+
+    // No canonical on a 404: the URL does not exist, so there is nothing to
+    // declare a preferred version of. Emitting one would consolidate the 404
+    // into the homepage.
+    if (!isNotFound) {
+      links.push({ rel: "canonical", href: canonicalUrl(path) });
+    }
+
+    return {
+      meta,
+      links,
       scripts: [{ src: "/track.js", defer: true }],
     };
   },
