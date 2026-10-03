@@ -1,5 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+// Loads the TanStack Start server-route type augmentation that declares the
+// `server.handlers` option below. Type-only: no runtime import is added.
+import type {} from "@tanstack/react-start";
+
 /**
  * First-party traffic beacon.
  *

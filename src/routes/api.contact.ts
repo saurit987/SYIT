@@ -1,5 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+// Loads the TanStack Start server-route type augmentation. The `server.handlers`
+// option below is declared in @tanstack/start-client-core's serverRoute module,
+// which is only reachable as a type re-export from @tanstack/react-start. Since
+// this file imports only @tanstack/react-router, that augmentation is otherwise
+// absent and `server` fails to typecheck. Type-only: no runtime import is added.
+import type {} from "@tanstack/react-start";
+
 /**
  * Contact form endpoint.
  *

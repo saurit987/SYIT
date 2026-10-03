@@ -40,7 +40,16 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+// `error` is typed `unknown` by TanStack Router's ErrorComponentProps; the
+// router may hand us any thrown value, so narrow it to a message rather than
+// asserting it is an Error.
+function ErrorComponent({
+  error,
+  reset,
+}: {
+  error: unknown;
+  reset: () => void;
+}) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
@@ -88,9 +97,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     // otherwise point every 404's canonical at the homepage — telling search
     // engines an unknown URL is a duplicate of "/". Detect it and emit noindex
     // with no canonical at all.
-    const isNotFound = matches.some(
-      (m) => m.status === "notFound" || m.globalNotFound,
-    );
+    const isNotFound = matches.some((m) => m.status === "notFound" || m._notFound);
     const path = leaf?.fullPath ?? "/";
     const meta = [
         { charSet: "utf-8" },
@@ -175,9 +182,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
               "@context": "https://schema.org",
               "@type": "ProfessionalService",
               name: "SYIT",
-              url: canonicalUrl("/"),
-              logo: `${canonicalUrl("/")}favicon-256.png`,
-              image: `${canonicalUrl("/")}og-default.png`,
+              // Absolute paths, not `canonicalUrl("/") + name`: canonicalUrl
+              // returns the bare origin for "/" with no trailing slash, which
+              // concatenated into "...syit.sauritlab.xyzfavicon-256.png" — a
+              // URL that resolves to nothing.
+              url: "https://syit.sauritlab.xyz",
+              logo: "https://syit.sauritlab.xyz/favicon-256.png",
+              image: "https://syit.sauritlab.xyz/og-default.png",
               description:
                 "Security and data privacy consultancy for startups and individuals.",
               email: "admin@sauritlab.xyz",
