@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { useReveal } from "@/components/site/useReveal";
+import { twitterCard } from "@/lib/seo";
 
 export const Route = createFileRoute("/privacy")({
   head: () => ({
@@ -16,6 +17,10 @@ export const Route = createFileRoute("/privacy")({
         property: "og:description",
         content: "What data we collect, why, how long we keep it, and your rights.",
       },
+      ...twitterCard(
+        "Privacy Policy — SYIT",
+        "What data we collect, why, how long we keep it, and your rights.",
+      ),
       { name: "robots", content: "index,follow" },
     ],
   }),

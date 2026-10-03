@@ -119,6 +119,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           name: "twitter:image",
           content: "https://syit.sauritlab.xyz/og-default.png",
         },
+        // Defaults for any route that has not set its own twitter:* pair. Every
+        // current route overrides both via twitterCard() in lib/seo.
+        { name: "twitter:title", content: "SYIT — Secure Your Infrastructure" },
+        {
+          name: "twitter:description",
+          content:
+            "Security and data privacy consultancy for startups and individuals.",
+        },
         // Keep 404s out of the index instead of letting them be crawled and
         // indexed as duplicates of the homepage.
         ...(isNotFound
@@ -152,10 +160,36 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       links.push({ rel: "canonical", href: canonicalUrl(path) });
     }
 
+    // Organization structured data. Every value here is already published on
+    // the site (name, url, the admin@ address on /contact, the logo); nothing
+    // is invented. Deliberately omitted: telephone (still masked), address,
+    // foundingDate, sameAs social profiles and aggregateRating — none are
+    // stated publicly, and asserting unverified schema.org properties is worse
+    // than omitting them. Skipped on 404s, which should not describe the org.
+    const jsonLd = isNotFound
+      ? []
+      : [
+          {
+            type: "application/ld+json",
+            children: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              name: "SYIT",
+              url: canonicalUrl("/"),
+              logo: `${canonicalUrl("/")}favicon-256.png`,
+              image: `${canonicalUrl("/")}og-default.png`,
+              description:
+                "Security and data privacy consultancy for startups and individuals.",
+              email: "admin@sauritlab.xyz",
+              areaServed: "Worldwide",
+            }),
+          } as const,
+        ];
+
     return {
       meta,
       links,
-      scripts: [{ src: "/track.js", defer: true }],
+      scripts: [{ src: "/track.js", defer: true }, ...jsonLd],
     };
   },
   shellComponent: RootShell,

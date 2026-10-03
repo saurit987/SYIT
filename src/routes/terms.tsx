@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { useReveal } from "@/components/site/useReveal";
+import { twitterCard } from "@/lib/seo";
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
@@ -16,6 +17,10 @@ export const Route = createFileRoute("/terms")({
         property: "og:description",
         content: "Terms for using this website and engaging SYIT for security work.",
       },
+      ...twitterCard(
+        "Terms & Conditions — SYIT",
+        "Terms for using this website and engaging SYIT for security work.",
+      ),
     ],
   }),
   component: TermsPage,

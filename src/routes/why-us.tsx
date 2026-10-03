@@ -3,6 +3,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { FinalCta } from "@/components/site/FinalCta";
 import { useReveal } from "@/components/site/useReveal";
 import { useScrollStory } from "@/lib/useScrollStory";
+import { twitterCard } from "@/lib/seo";
 
 export const Route = createFileRoute("/why-us")({
   head: () => ({
@@ -19,6 +20,10 @@ export const Route = createFileRoute("/why-us")({
         content:
           "Prioritised findings, faster security reviews, and privacy built in rather than bolted on.",
       },
+      ...twitterCard(
+        "Why SYIT is useful",
+        "Prioritised findings, faster security reviews, and privacy built in rather than bolted on.",
+      ),
     ],
   }),
   component: WhyUsPage,

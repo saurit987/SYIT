@@ -41,3 +41,19 @@ export function ogUrl(path: string) {
 export function canonicalLink(path: string) {
   return { rel: "canonical", href: canonicalUrl(path) } as const;
 }
+
+/**
+ * `twitter:title` / `twitter:description` for a route.
+ *
+ * X/Twitter falls back to the Open Graph tags when these are absent, so the
+ * cards rendered fine — but the fallback is not guaranteed: some scrapers read
+ * only the twitter:* namespace. Each route sets these explicitly, mirroring its
+ * own og:title/og:description. The root route supplies the same pair as
+ * defaults for any route that has not been updated.
+ */
+export function twitterCard(title: string, description: string) {
+  return [
+    { name: "twitter:title", content: title } as const,
+    { name: "twitter:description", content: description } as const,
+  ];
+}

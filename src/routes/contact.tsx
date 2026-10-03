@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { PageHero } from "@/components/site/PageHero";
 import { useReveal } from "@/components/site/useReveal";
+import { twitterCard } from "@/lib/seo";
 
 type SubmitState =
   | { kind: "idle" }
@@ -24,6 +25,10 @@ export const Route = createFileRoute("/contact")({
         content:
           "A useful first conversation about your security and privacy risks — no sales pitch.",
       },
+      ...twitterCard(
+        "Contact SYIT",
+        "A useful first conversation about your security and privacy risks — no sales pitch.",
+      ),
     ],
   }),
   component: ContactPage,

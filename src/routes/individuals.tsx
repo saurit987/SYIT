@@ -3,6 +3,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { FinalCta } from "@/components/site/FinalCta";
 import { useReveal } from "@/components/site/useReveal";
 import { useScrollStory } from "@/lib/useScrollStory";
+import { twitterCard } from "@/lib/seo";
 
 export const Route = createFileRoute("/individuals")({
   head: () => ({
@@ -18,6 +19,10 @@ export const Route = createFileRoute("/individuals")({
         property: "og:description",
         content: "Clean devices, protected accounts and a smaller digital footprint.",
       },
+      ...twitterCard(
+        "For Individuals — SYIT",
+        "Clean devices, protected accounts and a smaller digital footprint.",
+      ),
     ],
   }),
   component: IndividualsPage,

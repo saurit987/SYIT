@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useReveal } from "@/components/site/useReveal";
 import { useScrollStory } from "@/lib/useScrollStory";
 import { FinalCta } from "@/components/site/FinalCta";
+import { twitterCard } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -18,6 +19,10 @@ export const Route = createFileRoute("/")({
         content:
           "Security audits, data protection, identity hardening and compliance readiness for startups and individuals.",
       },
+      ...twitterCard(
+        "SYIT — Cybersecurity & Data Privacy Consultancy",
+        "Security audits, data protection, identity hardening and compliance readiness for startups and individuals.",
+      ),
     ],
   }),
   component: Index,

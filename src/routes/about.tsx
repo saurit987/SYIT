@@ -3,6 +3,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { FinalCta } from "@/components/site/FinalCta";
 import { useReveal } from "@/components/site/useReveal";
 import { useScrollStory } from "@/lib/useScrollStory";
+import { twitterCard } from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -18,6 +19,10 @@ export const Route = createFileRoute("/about")({
         property: "og:description",
         content: "A small, senior security practice built around practical risk reduction.",
       },
+      ...twitterCard(
+        "What we are — SYIT Security Consultancy",
+        "A small, senior security practice built around practical risk reduction.",
+      ),
     ],
   }),
   component: AboutPage,

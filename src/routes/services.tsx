@@ -3,6 +3,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { FinalCta } from "@/components/site/FinalCta";
 import { useReveal } from "@/components/site/useReveal";
 import { useScrollStory } from "@/lib/useScrollStory";
+import { twitterCard } from "@/lib/seo";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -19,6 +20,10 @@ export const Route = createFileRoute("/services")({
         content:
           "Audits, privacy programmes, identity hardening, compliance readiness and incident support.",
       },
+      ...twitterCard(
+        "Services — SYIT Security Consultancy",
+        "Audits, privacy programmes, identity hardening, compliance readiness and incident support.",
+      ),
     ],
   }),
   component: ServicesPage,
